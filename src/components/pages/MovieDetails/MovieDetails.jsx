@@ -1,10 +1,37 @@
+import { Outlet } from 'react-router-dom';
+import { fetchMovieDetails } from 'services/fetchApi';
+import { useState, useEffect } from 'react';
+import { Loader } from 'components/Loader/Loader';
+import { useParams } from 'react-router-dom';
+import { MoviesInfo } from 'components/MoviesInfo/MoviesInfo';
+
 export const MovieDetails = () => {
-    return (
-        <>
-        <li>Movie 1</li>
-        <li>Movie 2</li>
-        <li>Movie 3</li>
-        <li>Movie 4</li>
-        </>
-    )
-}
+  const [movieDetails, setMovieDetail] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { movieId } = useParams();
+
+  useEffect(() => {
+    const fetchMovieInformation = async movieId => {
+      setIsLoading(true);
+      try {
+        const movieInformation = await fetchMovieDetails(movieId);
+        setMovieDetail(movieInformation);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMovieInformation(movieId);
+  }, [movieId]);
+  return (
+    <>
+      {isLoading && <Loader />}
+      {error && <p>Sorry, we can't process your request! Please, repeat.</p>}
+      {movieDetails && <MoviesInfo movieInfo={movieDetails}/>}
+      <Outlet />
+    </>
+  );
+};

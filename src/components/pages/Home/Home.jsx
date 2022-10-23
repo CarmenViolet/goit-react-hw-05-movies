@@ -1,7 +1,7 @@
 import { fetchTrendingToday } from 'services/fetchApi';
 import { useState, useEffect } from 'react';
 import { Loader } from 'components/Loader/Loader';
-import { mapper } from 'utils/mapper';
+import { MoviesList } from 'components/MoviesList/MoviesList';
 
 export const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -10,25 +10,26 @@ export const Home = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-        setIsLoading(true);
+      setIsLoading(true);
       try {
         const trendingToday = await fetchTrendingToday();
-        setMovies(...mapper(trendingToday))
+        setMovies(trendingToday);
       } catch (error) {
-        setError(error.message)
+        setError(error.message);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     };
 
-    fetchMovies()
+    fetchMovies();
   }, []);
 
   return (
     <div>
       <h1>Trending today</h1>
       {isLoading && <Loader />}
-        {error && <p>Sorry, we can't process your request! Please, repeat.</p>}
+      {error && <p>Sorry, we can't process your request! Please, repeat.</p>}
+      {movies && <MoviesList movies={movies} />}
     </div>
   );
 };
