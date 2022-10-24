@@ -32,12 +32,12 @@ export const MoviesInfo = ({ movieInfo }) => {
       <h3>Status Release</h3>
       <p>{status}</p>
       <h3>Languages:</h3>
-      {/* <p>{spoken_languages.map(({name}) => name)}</p> */}
+      {/* <p>{spoken_languages.map(({name}) => name).join(" ")}</p> */}
       <h3>Film Popularity</h3>
       <p>Rating score: {Math.round(popularity)}</p>
       <p>Vote count: {vote_count}</p>
       <h3>Genres</h3>
-      {/* <p>{genres.map(({name,}) => name).join(",  ")}</p> */}
+      {/* <p>{genres.map(({name}) => name).join(" ")}</p> */}
       
     <h3>Additional information</h3>
     <nav>
