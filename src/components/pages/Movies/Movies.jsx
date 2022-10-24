@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import { fetchMoviesRequest } from 'services/fetchApi';
 import { Loader } from 'components/Loader/Loader';
 import { useSearchParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
-export const Movies = () => {
+const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +54,9 @@ export const Movies = () => {
       {isLoading && <Loader />}
       {error && <p>Sorry, we can't process your request! Please, repeat.</p>}
       {movies && <MoviesList movies={movies} />}
+      <Outlet/>
     </div>
   );
 };
+
+export default Movies;

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchReviews } from 'services/fetchApi';
 import { Loader } from 'components/Loader/Loader';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -24,7 +24,6 @@ export const Reviews = () => {
 
     fetchMovieInformation(movieId);
   }, [movieId]);
-  console.log(reviews);
   return (
     <>
       {isLoading && <Loader />}
@@ -44,3 +43,5 @@ export const Reviews = () => {
     </>
   );
 };
+
+export default Reviews;

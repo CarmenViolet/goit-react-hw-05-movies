@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import { fetchMovieDetails } from 'services/fetchApi';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Loader } from 'components/Loader/Loader';
 import { useParams } from 'react-router-dom';
 import { MoviesInfo } from 'components/MoviesInfo/MoviesInfo';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movieDetails, setMovieDetail] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,8 +30,12 @@ export const MovieDetails = () => {
     <>
       {isLoading && <Loader />}
       {error && <p>Sorry, we can't process your request! Please, repeat.</p>}
-      {movieDetails && <MoviesInfo movieInfo={movieDetails}/>}
-      <Outlet />
+      {movieDetails && <MoviesInfo movieInfo={movieDetails} />}
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default MovieDetails;
