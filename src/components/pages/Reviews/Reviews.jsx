@@ -13,8 +13,8 @@ export const Reviews = () => {
     const fetchMovieInformation = async movieId => {
       setIsLoading(true);
       try {
-        const castSearch = fetchReviews(`${movieId}/reviews`);
-        setReviews(castSearch);
+        const reviewsSearch = await fetchReviews(`${movieId}/reviews`);
+        setReviews(reviewsSearch.results);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -24,17 +24,18 @@ export const Reviews = () => {
 
     fetchMovieInformation(movieId);
   }, [movieId]);
+  console.log(reviews);
   return (
     <>
       {isLoading && <Loader />}
       {error && <p>Sorry, we can't process your request! Please, repeat.</p>}
       {reviews && (
         <ul>
-          {reviews.map(({ id, results }) => {
+          {reviews.map(({ id, author, content }) => {
             return (
               <li key={id}>
-                <h3>{results.map(({ author }) => author)}</h3>
-                <p>{results.map(({ content }) => content)}</p>
+                <h3>{author}</h3>
+                <p>{content}</p>
               </li>
             );
           })}

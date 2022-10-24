@@ -25,17 +25,15 @@ export const fetchMovieDetails = async id => {
 };
 
 export const fetchMoviesRequest = async query => {
-    const response = await axios('search/movie', {
-        params: {
-          api_key: KEY,
-          query
-        },
-      });
-    
-      return transformMovies(response.data.results);
-}
+  const response = await axios('search/movie', {
+    params: {
+      api_key: KEY,
+      query,
+    },
+  });
 
-
+  return transformMovies(response.data.results);
+};
 
 export const fetchCast = async id => {
   const response = await axios(`movie/${id}`, {
@@ -56,4 +54,3 @@ export const fetchReviews = async id => {
 
   return response.data;
 };
-
